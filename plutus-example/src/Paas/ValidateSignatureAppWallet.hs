@@ -3,14 +3,14 @@ Author: Thang Tran
 Project: Bworks, Paas
 Validator description: Verfify sign wallet signature with public key hash attached to datum.
 Usage: To assign a wallet to unlock a locked UTXO and only this wallet can unlock the locked UTXO
-Note: Support CIP-30 inline datum  
+Notes: Support CIP-30 inline datum  
 -}
 
 {-# LANGUAGE DataKinds         #-}
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE TemplateHaskell   #-}
 
-module Paas.VerifySignatureAppWallet
+module Paas.ValidateSignatureAppWallet
   ( bWorksV2AppWalletScriptShortBsV2
   , bWorksV2AppWalletScriptV2
   ) where

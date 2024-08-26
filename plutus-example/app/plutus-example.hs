@@ -28,6 +28,7 @@ import Paas.ValidateDateTime (unlockWithTimeValidateScriptV2)
 import Paas.ValidateSignatureAppWallet (paasAppWalletScriptV2) 
 import Paas.MintingScript (paasMintingScriptV2)
 import Paas.ValidateContextTxTimeRange (validateContextTxTimeRangeScriptV2)
+import Paas.ValidatePosixDateTimePoint (validateTimePointScriptV2)
 
 main :: IO ()
 main = do
@@ -64,5 +65,6 @@ main = do
   _ <- writeFileTextEnvelope (paasdir </> "validate-signature.plutus") Nothing paasAppWalletScriptV2
   _ <- writeFileTextEnvelope (paasdir </> "minting-script.plutus") Nothing paasMintingScriptV2
   _ <- writeFileTextEnvelope (paasdir </> "validate-contextTx-timeRange.plutus") Nothing validateContextTxTimeRangeScriptV2
+  _ <- writeFileTextEnvelope (paasdir </> "validate-time-points.plutus") Nothing validateTimePointScriptV2
 
   return ()

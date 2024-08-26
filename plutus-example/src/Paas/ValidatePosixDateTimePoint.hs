@@ -1,6 +1,7 @@
 {-
 Author: Thang Tran
 Project: Bworks, Paas
+Plutus V2, support CIP-32 inline datum 
 Validator description: Validate plutus POSIXTime from datum and redeemer with lesser, equal and greater logics.
 How to use:
   1. lock some Ada to this contract with three dates. 
@@ -14,7 +15,7 @@ This to demo how plutus works with POSIXTime which mostly use in real life.
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE TemplateHaskell   #-}
 
-module TestedSamples.ValidateDateTime
+module Paas.ValidatePosixDateTimePoint
   ( validateTimePointScriptV2
   , validateTimePointScriptShortBsV2
   ) where

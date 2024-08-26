@@ -1,7 +1,7 @@
 {-
 Author: Thang Tran
 Project: Bworks, Paas
-Validator description: Validate unlock time. If the unlock within time range defined in datum then transaction is validated.
+Validator description: Validate timer. If the unlock after the time defined in datum then transaction is validated.
 Usage: Use to apply deadline
 Notes: Support CIP-32 inline datum
 

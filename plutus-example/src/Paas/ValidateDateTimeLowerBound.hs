@@ -3,7 +3,7 @@ Author: Thang Tran
 Project: Bworks, Paas
 Validator description: Validate unlock time. If the unlock within time range defined in datum then transaction is validated.
 Usage: Use to apply deadline
-Notes: Support CIP-30 inline datum
+Notes: Support CIP-32 inline datum
 
 This script just to test the LowerBound of txTimeRange to see if it has value or NegInf, PosInf
 

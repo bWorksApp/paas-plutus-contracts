@@ -29,6 +29,9 @@ How to use:
     44  -> LowerBound Nothing and UpperBound Nothing
 
   This is useful when we intend to develop the smart contract time validator with valid time range in execution context e.g value before, value fter, range contains.
+  Notes:
+  Plutus V2
+  Use for research only
 -}
 
 

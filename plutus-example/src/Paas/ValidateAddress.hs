@@ -1,3 +1,22 @@
+{-
+Author: Thang tran
+Projects: PAAS, Bworks
+API docs
+https://www.doitwithlovelace.io/haddock/plutus-ledger-api/html/Plutus-V2-Ledger-Contexts.html#t:TxOut
+
+Description: validate the receiver address with public key hash attached in datum.
+
+Logics:
+- validate receiver address to be the same with the one attached to datum
+- validate receiver address of unlock transaction.
+- get receiver address from TxInfo -> compare it with attached in datum 
+
+Notes:
+Plutus V2, CIP 32
+Worked with CLI and app wallets
+
+-}
+
 {-# LANGUAGE DataKinds         #-}
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE TemplateHaskell   #-}
@@ -21,36 +40,38 @@ import PlutusTx.Prelude qualified as P
 import Plutus.V2.Ledger.Api qualified as V2
 import Plutus.V2.Ledger.Contexts as V2
 import Plutus.V1.Ledger.Address qualified as Address
+import Plutus.V1.Ledger.Address qualified as V1Address
 
-data UnlockWithCorrectAddressRedeemer
-  = UnlockWithCorrectAddressRedeemer
+data ValidateAddressRedeemer
+  = ValidateAddressRedeemer
       { 
       } deriving (Prelude.Eq, Show)
 
-data UnlockWithCorrectAddressDatum
-  = UnlockWithCorrectAddressDatum
+data ValidateAddressDatum
+  = ValidateAddressDatum
       {
-      receiverWalletPublicKeyHash :: Plutus.PubKeyHash
-      --receiverWalletPublicKeyHash :: [Plutus.PubKeyHash]
+      unlockSignature :: Plutus.PubKeyHash
       } deriving (Prelude.Eq, Show)
 
-PlutusTx.unstableMakeIsData ''UnlockWithCorrectAddressDatum
-PlutusTx.unstableMakeIsData ''UnlockWithCorrectAddressRedeemer
+PlutusTx.unstableMakeIsData ''ValidateAddressDatum
+PlutusTx.unstableMakeIsData ''ValidateAddressRedeemer
 
 {-# INLINABLE mkValidator #-}
--- validate receiver address to be the same with the one attached to datum
--- validate receiver address of unlock transaction.
--- get receiver address -> compare it with attached in datum 
-mkValidator :: UnlockWithCorrectAddressDatum -> UnlockWithCorrectAddressRedeemer ->  ScriptContext -> Bool
-mkValidator (UnlockWithCorrectAddressDatum receiverWalletPublicKeyHash) (UnlockWithCorrectAddressRedeemer {}) scriptContext = 
-  outAddresses P.== P.map Address.pubKeyHashAddress [receiverWalletPublicKeyHash]
-  --outAddresses P.== P.map Address.pubKeyHashAddress receiverWalletPublicKeyHash
-  where  
+mkValidator :: ValidateAddressDatum -> ValidateAddressRedeemer ->  ScriptContext -> Bool
+mkValidator (ValidateAddressDatum unlockSignature) (ValidateAddressRedeemer {}) scriptContext = 
+  outPKH P.== Just unlockSignature
+  where 
+    outAddress =  Address.pubKeyHashAddress unlockSignature
     txInfo :: Plutus.TxInfo
     txInfo = Plutus.scriptContextTxInfo scriptContext
     txInfoOutputs :: [Plutus.TxOut]
     txInfoOutputs = Plutus.txInfoOutputs txInfo
     outAddresses = P.map V2.txOutAddress txInfoOutputs
+    txOutAddresses :: Address.Address
+    txOutAddresses = P.head outAddresses
+    outPKH :: Maybe Plutus.PubKeyHash
+    outPKH = Address.toPubKeyHash txOutAddresses 
+
 
 validator :: Plutus.Validator
 validator = Plutus.mkValidatorScript
@@ -66,3 +87,5 @@ validateAddressScriptShortBsV2 = SBS.toShort . LBS.toStrict $ serialise script
 
 validateAddressScriptV2 :: PlutusScript PlutusScriptV2
 validateAddressScriptV2 = PlutusScriptSerialised validateAddressScriptShortBsV2
+
+

@@ -1,13 +1,16 @@
+{--
+Author: Thang Tran
+Projects: PAAS, Bworks 
+The validator return true if redeemer contains 2024 integer number.
+This use to mint asset via PAAS platform.
+This worked with PAAS mint UI 
+--}
+
 {-# LANGUAGE DataKinds         #-}
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE TemplateHaskell   #-}
 {-# LANGUAGE TypeApplications  #-}
 {-# LANGUAGE TypeFamilies      #-}
-
-{-- 
-The validator return true if redeemer contains 2024 integer number.
-This use to mint asset via PAAS platform.
---}
 
 module Paas.MintingScript
   ( paasMintingScriptV2
@@ -15,14 +18,11 @@ module Paas.MintingScript
   ) where
 
 import Prelude hiding (($))
-
 import Cardano.Api.Shelley (PlutusScript (..), PlutusScriptV2)
 import Prelude hiding (($), (&&))
-
 import Codec.Serialise
 import Data.ByteString.Lazy qualified as LBS
 import Data.ByteString.Short qualified as SBS
-
 import Plutus.Script.Utils.Typed as Scripts
 import Plutus.V2.Ledger.Api qualified as V2
 import Plutus.V2.Ledger.Contexts as V2
@@ -30,8 +30,6 @@ import PlutusTx qualified
 import PlutusTx.Prelude qualified as P
 import PlutusTx.Builtins
 import PlutusTx.Prelude hiding (Semigroup (..), unless, (.))
-
-
 
 data PaasMintRedeemer
   = PaasMintRedeemer
@@ -41,9 +39,7 @@ data PaasMintRedeemer
 
 PlutusTx.unstableMakeIsData ''PaasMintRedeemer
 
-
 {- HLINT ignore "Avoid lambda" -}
-
 {-# INLINABLE mkPolicy #-}
 mkPolicy :: PaasMintRedeemer -> V2.ScriptContext -> Bool
 mkPolicy (PaasMintRedeemer number) _ctx = number P.== 2024

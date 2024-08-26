@@ -5,6 +5,11 @@ Validator description: Validate unlock time. If the unlock within time range def
 Usage: Use to apply deadline
 Notes: Support CIP-30 inline datum
 
+
+This script just to test the UpperBound of txTimeRange to see if it has value or NegInf, PosInf
+
+If the script can unlock then the UpperBound is PosInf
+
 -}
 
 
@@ -12,9 +17,9 @@ Notes: Support CIP-30 inline datum
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE TemplateHaskell   #-}
 
-module Paas.ValidateDateTime
-  ( unlockWithTimeValidateScriptV2
-  , unlockWithTimeValidateScriptShortBsV2
+module TestedSamples.ValidateDateTime
+  ( upperBoundTimeValidateScriptV2
+  , upperBoundTimeValidateScriptShortBsV2
   ) where
 
 import Prelude hiding (($), (&&), (==))
@@ -30,36 +35,48 @@ import Plutus.Script.Utils.Typed qualified as Scripts
 import PlutusTx.Prelude qualified as P
 import Plutus.V1.Ledger.Interval as Interval
 import Plutus.V1.Ledger.Time as V1Time
-import Ledger (CardanoAddress, CardanoTx, Language, SlotRange, TxOutRef (..), Versioned, toPlutusAddress)
 
 data UnlockWithTimeValidateRedeemer
   = UnlockWithTimeValidateRedeemer
-      { 
+      {
+        time1 :: Plutus.POSIXTime 
       } deriving (Prelude.Eq, Show)
 
 data UnlockWithTimeValidateDatum
   = UnlockWithTimeValidateDatum
        { 
-       time :: Plutus.POSIXTime
+        time :: Plutus.POSIXTime 
       } deriving (Prelude.Eq, Show)
 
 PlutusTx.unstableMakeIsData ''UnlockWithTimeValidateRedeemer
 PlutusTx.unstableMakeIsData ''UnlockWithTimeValidateDatum
 
 
-
 {-# INLINABLE mkValidator #-}
 --we will add validator logics here to verify the transaction is valid if it is signed by bWorks
 mkValidator :: UnlockWithTimeValidateDatum -> UnlockWithTimeValidateRedeemer ->  ScriptContext -> Bool
-mkValidator (UnlockWithTimeValidateDatum time) (UnlockWithTimeValidateRedeemer ) scriptContext = 
-  Plutus.txInfoValidRange txInfo `Interval.contains` timeRange
-  where  
+mkValidator (UnlockWithTimeValidateDatum time) (UnlockWithTimeValidateRedeemer time1) scriptContext = (extractFiniteUpper txTimeRange) P.== Just (Plutus.POSIXTime 1)
+ -- Interval.before time txTimeRange
+  where
+    x :: Plutus.POSIXTime
+    y :: Plutus.POSIXTime
+    x = Plutus.POSIXTime 10
+    y = Plutus.POSIXTime 1
     timeRange:: Plutus.POSIXTimeRange
-    timeRange = Interval.from time
+    timeRange = Interval.to time
     txInfo :: Plutus.TxInfo
     txInfo = Plutus.scriptContextTxInfo scriptContext
     txTimeRange :: Plutus.POSIXTimeRange
     txTimeRange = Plutus.txInfoValidRange txInfo
+    extractFiniteUpper :: Interval Plutus.POSIXTime -> Maybe Plutus.POSIXTime
+    extractFiniteUpper interval = case ivTo interval of
+      UpperBound (Finite value) _ -> Just (Plutus.POSIXTime 0)
+      UpperBound (NegInf ) _      -> Just x
+      UpperBound (PosInf ) _      -> Just y
+     
+
+    abc :: Maybe  Plutus.POSIXTime
+    abc = extractFiniteUpper txTimeRange
 
 validator :: Plutus.Validator
 validator = Plutus.mkValidatorScript
@@ -70,8 +87,8 @@ validator = Plutus.mkValidatorScript
 script :: Plutus.Script
 script = Plutus.unValidatorScript validator
 
-unlockWithTimeValidateScriptShortBsV2 :: SBS.ShortByteString
-unlockWithTimeValidateScriptShortBsV2 = SBS.toShort . LBS.toStrict $ serialise script
+upperBoundTimeValidateScriptShortBsV2 :: SBS.ShortByteString
+upperBoundTimeValidateScriptShortBsV2 = SBS.toShort . LBS.toStrict $ serialise script
 
-unlockWithTimeValidateScriptV2 :: PlutusScript PlutusScriptV2
-unlockWithTimeValidateScriptV2 = PlutusScriptSerialised unlockWithTimeValidateScriptShortBsV2
+upperBoundTimeValidateScriptV2 :: PlutusScript PlutusScriptV2
+upperBoundTimeValidateScriptV2 = PlutusScriptSerialised upperBoundTimeValidateScriptShortBsV2

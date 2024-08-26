@@ -2,7 +2,7 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE TemplateHaskell   #-}
 
-module TestedSamples.ValidateAddress
+module Paas.ValidateAddress
   ( validateAddressScriptShortBsV2
   , validateAddressScriptV2
   ) where
@@ -22,29 +22,29 @@ import Plutus.V2.Ledger.Api qualified as V2
 import Plutus.V2.Ledger.Contexts as V2
 import Plutus.V1.Ledger.Address qualified as Address
 
-data UnlockByEmpWithoutDeadLineRedeemer
-  = UnlockByEmpWithoutDeadLineRedeemer
+data UnlockWithCorrectAddressRedeemer
+  = UnlockWithCorrectAddressRedeemer
       { 
       } deriving (Prelude.Eq, Show)
 
-data UnlockByEmpWithoutDeadLineDatum
-  = UnlockByEmpWithoutDeadLineDatum
+data UnlockWithCorrectAddressDatum
+  = UnlockWithCorrectAddressDatum
       {
-      unlockSignature :: Plutus.PubKeyHash
-      --unlockSignature :: [Plutus.PubKeyHash]
+      receiverWalletPublicKeyHash :: Plutus.PubKeyHash
+      --receiverWalletPublicKeyHash :: [Plutus.PubKeyHash]
       } deriving (Prelude.Eq, Show)
 
-PlutusTx.unstableMakeIsData ''UnlockByEmpWithoutDeadLineDatum
-PlutusTx.unstableMakeIsData ''UnlockByEmpWithoutDeadLineRedeemer
+PlutusTx.unstableMakeIsData ''UnlockWithCorrectAddressDatum
+PlutusTx.unstableMakeIsData ''UnlockWithCorrectAddressRedeemer
 
 {-# INLINABLE mkValidator #-}
 -- validate receiver address to be the same with the one attached to datum
 -- validate receiver address of unlock transaction.
 -- get receiver address -> compare it with attached in datum 
-mkValidator :: UnlockByEmpWithoutDeadLineDatum -> UnlockByEmpWithoutDeadLineRedeemer ->  ScriptContext -> Bool
-mkValidator (UnlockByEmpWithoutDeadLineDatum unlockSignature) (UnlockByEmpWithoutDeadLineRedeemer {}) scriptContext = 
-  outAddresses P.== P.map Address.pubKeyHashAddress [unlockSignature]
-  --outAddresses P.== P.map Address.pubKeyHashAddress unlockSignature
+mkValidator :: UnlockWithCorrectAddressDatum -> UnlockWithCorrectAddressRedeemer ->  ScriptContext -> Bool
+mkValidator (UnlockWithCorrectAddressDatum receiverWalletPublicKeyHash) (UnlockWithCorrectAddressRedeemer {}) scriptContext = 
+  outAddresses P.== P.map Address.pubKeyHashAddress [receiverWalletPublicKeyHash]
+  --outAddresses P.== P.map Address.pubKeyHashAddress receiverWalletPublicKeyHash
   where  
     txInfo :: Plutus.TxInfo
     txInfo = Plutus.scriptContextTxInfo scriptContext

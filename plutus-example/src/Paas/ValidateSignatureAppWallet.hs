@@ -11,8 +11,8 @@ Notes: Support CIP-30 inline datum
 {-# LANGUAGE TemplateHaskell   #-}
 
 module Paas.ValidateSignatureAppWallet
-  ( bWorksV2AppWalletScriptShortBsV2
-  , bWorksV2AppWalletScriptV2
+  ( paasAppWalletScriptShortBsV2
+  , paasAppWalletScriptV2
   ) where
 
 import Prelude hiding (($), (&&), (==))
@@ -63,8 +63,8 @@ validator = Plutus.mkValidatorScript
 script :: Plutus.Script
 script = Plutus.unValidatorScript validator
 
-bWorksV2AppWalletScriptShortBsV2 :: SBS.ShortByteString
-bWorksV2AppWalletScriptShortBsV2 = SBS.toShort . LBS.toStrict $ serialise script
+paasAppWalletScriptShortBsV2 :: SBS.ShortByteString
+paasAppWalletScriptShortBsV2 = SBS.toShort . LBS.toStrict $ serialise script
 
-bWorksV2AppWalletScriptV2 :: PlutusScript PlutusScriptV2
-bWorksV2AppWalletScriptV2 = PlutusScriptSerialised bWorksV2AppWalletScriptShortBsV2
+paasAppWalletScriptV2 :: PlutusScript PlutusScriptV2
+paasAppWalletScriptV2 = PlutusScriptSerialised paasAppWalletScriptShortBsV2

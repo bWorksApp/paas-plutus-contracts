@@ -22,12 +22,20 @@ import PlutusExample.PlutusVersion2.RequireRedeemer (requireRedeemerScript)
 import PlutusExample.PlutusVersion2.SchnorrSecp256k1Loop (v2SchnorrLoopScript)
 import PlutusExample.PlutusVersion2.StakeScript (v2StakeScript)
 
+--Paas
+import Paas.ValidateAddress (validateAddressScriptV2)
+import Paas.ValidateDateTime (unlockWithTimeValidateScriptV2)
+import Paas.ValidateSignatureAppWallet (paasAppWalletScriptV2) 
+import Paas.MintingScript (paasMintingScriptV2)
+
 main :: IO ()
 main = do
   let v1dir = "generated-plutus-scripts/v1"
       v2dir = "generated-plutus-scripts/v2"
+      paasdir = "generated-plutus-scripts/paas"
   createDirectoryIfMissing True v1dir
   createDirectoryIfMissing True v2dir
+  createDirectoryIfMissing True paasdir
 
   _ <- writeFileTextEnvelope (v1dir </> "always-fails.plutus") Nothing alwaysFailsScript
   _ <- writeFileTextEnvelope (v1dir </> "always-succeeds-spending.plutus") Nothing alwaysSucceedsScript
@@ -49,4 +57,10 @@ main = do
   _ <- writeFileTextEnvelope (v2dir </> "ecdsa-secp256k1-loop.plutus") Nothing v2EcdsaLoopScript
   _ <- writeFileTextEnvelope (v2dir </> "schnorr-secp256k1-loop.plutus") Nothing v2SchnorrLoopScript
 
+--Paas
+  _ <- writeFileTextEnvelope (paasdir </> "validate-address.plutus") Nothing validateAddressScriptV2
+  _ <- writeFileTextEnvelope (paasdir </> "validate-time.plutus") Nothing unlockWithTimeValidateScriptV2
+  _ <- writeFileTextEnvelope (paasdir </> "validate-signature.plutus") Nothing paasAppWalletScriptV2
+  _ <- writeFileTextEnvelope (paasdir </> "minting-script.plutus") Nothing paasMintingScriptV2
+  
   return ()

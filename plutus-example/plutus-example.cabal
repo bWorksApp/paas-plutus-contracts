@@ -72,7 +72,8 @@ library
     Paas.ValidateDateTime
     Paas.ValidateSignatureAppWallet
     Paas.MintingScript
-    
+    Paas.ValidateContextTxTimeRange
+
   --------------------
   -- Local components
   --------------------

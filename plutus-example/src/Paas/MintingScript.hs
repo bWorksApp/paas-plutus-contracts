@@ -4,6 +4,10 @@
 {-# LANGUAGE TypeApplications  #-}
 {-# LANGUAGE TypeFamilies      #-}
 
+{-- 
+The validator return true if redeemer contains 2024 integer number.
+This use to mint asset via PAAS platform.
+--}
 
 module Paas.MintingScript
   ( paasMintingScriptV2

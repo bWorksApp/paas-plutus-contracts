@@ -63,6 +63,6 @@ main = do
   _ <- writeFileTextEnvelope (paasdir </> "validate-time.plutus") Nothing unlockWithTimeValidateScriptV2
   _ <- writeFileTextEnvelope (paasdir </> "validate-signature.plutus") Nothing paasAppWalletScriptV2
   _ <- writeFileTextEnvelope (paasdir </> "minting-script.plutus") Nothing paasMintingScriptV2
-  _ <- writeFileTextEnvelope (paasdir </> "Validate-contextTx-timeRange.plutus") Nothing validateContextTxTimeRangeScriptV2
+  _ <- writeFileTextEnvelope (paasdir </> "validate-contextTx-timeRange.plutus") Nothing validateContextTxTimeRangeScriptV2
 
   return ()

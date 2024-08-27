@@ -75,6 +75,7 @@ library
     Paas.ValidateContextTxTimeRange
     Paas.ValidatePosixDateTimePoint
     Paas.ValidateDatumRedeemerData
+    Paas.ValidateSignatureAndReceiverWallet
     
   --------------------
   -- Local components

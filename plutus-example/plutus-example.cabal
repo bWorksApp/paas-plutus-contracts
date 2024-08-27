@@ -74,6 +74,7 @@ library
     Paas.MintingScript
     Paas.ValidateContextTxTimeRange
     Paas.ValidatePosixDateTimePoint
+    Paas.ValidateDatumRedeemerData
     
   --------------------
   -- Local components

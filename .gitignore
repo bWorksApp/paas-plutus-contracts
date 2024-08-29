@@ -1,3 +1,6 @@
+#wallets
+wallets/*
+
 # Latex
 *.dvi
 *.fls
@@ -104,7 +107,7 @@ node.sock
 **/node?/db
 .pre-commit-config.yaml
 secrets/*/.gpg-id
-generated-plutus-scripts/
+#generated-plutus-scripts/
 ghcid.txt
 plutus-pab/test-node/testnet/db
 plutus-pab/test-node/testnet/restore-wallet.json

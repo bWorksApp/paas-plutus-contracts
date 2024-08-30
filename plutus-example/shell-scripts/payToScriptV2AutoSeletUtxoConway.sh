@@ -1,6 +1,6 @@
 #!/bin/zsh
-#zsh payToScript valueInLovelace scriptName datumJsonFile walletName
-#zsh payToScriptV2AutoSeletUtxo.sh  3100000 bworksV2 secret.json wallet01
+#zsh payToScriptV2AutoSeletUtxoConway valueInLovelace scriptName datumJsonFile walletName
+#zsh payToScriptV2AutoSeletUtxoConway.sh  3000000 validate-signature  datum.json wallet01
 
 source ./functions.sh
 

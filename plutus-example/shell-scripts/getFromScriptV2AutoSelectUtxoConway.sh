@@ -1,8 +1,8 @@
 #!/bin/zsh
 #this script is similar to getFromScriptV2 except it call different functions from functions.sh 
 #to auto select collatel utxo & curent locked utxo (the utxo need to be unlock)
-#zsh getFromScript scriptName redeemerJsonFile payCollatelWalletName receiveWalletAddress scriptTxHash
-#zsh getFromScriptV2AutoSelectUtxo.sh bworksV2 secret.json wallet01 addr_test1vz52h0cn9ua9vl8ak4yz4czas3sf3ftjy82a5tt7ladhufqyuk45c 6e767bbbff2b90e163ae4f1225b563bc11fd33642c3c43c7aca55f90a7bd5cdd 
+#zsh getFromScriptV2AutoSelectUtxoConway scriptName redeemerJsonFile payCollatelWalletName receiveWalletAddress scriptTxHash
+#zsh getFromScriptV2AutoSelectUtxoConway.sh validate-signature  redeemer.json wallet01 addr_test1vrytgm4p7dckfpdjehpm3w263rsgh0tujtjue3eej5rh2lsczr8qs e7426079219d9ec87a4b813eff0872b8eea5aaffda94571a719f05fcd3868b9d
 
 source ./functions.sh
 

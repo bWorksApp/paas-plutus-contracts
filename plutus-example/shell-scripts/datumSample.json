@@ -1,0 +1,14 @@
+{
+  "constructor": 0,
+  "fields": [
+    {
+      "bytes": "c8b46ea1f3716485b2cdc3b8b95a88e08bbd7c92e5ccc7399507757e" //string
+    },
+    {
+      "int": 123456 //integer number
+    },
+    {
+      "int": 1725004755000 //date as milliseconds
+    }
+  ]
+}

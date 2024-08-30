@@ -1,9 +1,6 @@
 {
 	"constructor": 0,
 	"fields": [{
-		"int": 10
-	},
-	{
-		"int": 10
+		"bytes": "c8b46ea1f3716485b2cdc3b8b95a88e08bbd7c92e5ccc7399507757e"
 	}]
 }

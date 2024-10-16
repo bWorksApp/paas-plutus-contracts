@@ -7,9 +7,7 @@ Notes: Support CIP-32 inline datum
 
 
 This script just to test the UpperBound of txTimeRange to see if it has value or NegInf, PosInf
-
 If the script can unlock then the UpperBound is PosInf
-
 -}
 
 

@@ -6,9 +6,7 @@ Usage: Use to apply deadline
 Notes: Support CIP-32 inline datum
 
 This script just to test the LowerBound of txTimeRange to see if it has value or NegInf, PosInf
-
 if can unlock then LowerBound is NegInf
-
 -}
 
 

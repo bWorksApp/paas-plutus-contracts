@@ -4,7 +4,6 @@ Project: Bworks, Paas
 Validator description: Validate timer. If the unlock after the time defined in datum then transaction is validated.
 Usage: Use to apply deadline
 Notes: Support CIP-32 inline datum
-
 -}
 
 

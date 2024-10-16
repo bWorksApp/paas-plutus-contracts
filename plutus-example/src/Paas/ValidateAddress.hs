@@ -14,7 +14,6 @@ Logics:
 Notes:
 Plutus V2, CIP 32
 Worked with CLI and app wallets
-
 -}
 
 {-# LANGUAGE DataKinds         #-}

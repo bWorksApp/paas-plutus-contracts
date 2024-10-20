@@ -76,7 +76,8 @@ library
     Paas.ValidatePosixDateTimePoint
     Paas.ValidateDatumRedeemerData
     Paas.ValidateSignatureAndReceiverWallet
-    
+    Paas.MintingWithStringScript
+    Paas.ValidateOrSignatures
   --------------------
   -- Local components
   --------------------

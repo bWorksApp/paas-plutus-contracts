@@ -31,6 +31,8 @@ import Paas.ValidateContextTxTimeRange (validateContextTxTimeRangeScriptV2)
 import Paas.ValidatePosixDateTimePoint (validateTimePointScriptV2)
 import Paas.ValidateDatumRedeemerData (validateDatumRedeemerDataScriptV2)
 import Paas.ValidateSignatureAndReceiverWallet (signatureAndAddressScriptV2)
+import Paas.MintingWithStringScript (paasMintingWithStringScriptV2)
+import Paas.ValidateOrSignatures (paasValidateOrSignaturesV2)
 
 main :: IO ()
 main = do
@@ -70,5 +72,7 @@ main = do
   _ <- writeFileTextEnvelope (paasdir </> "validate-time-points.plutus") Nothing validateTimePointScriptV2
   _ <- writeFileTextEnvelope (paasdir </> "validate-datum-redeemer-data.plutus") Nothing validateDatumRedeemerDataScriptV2
   _ <- writeFileTextEnvelope (paasdir </> "validate-signature-receiver-address.plutus") Nothing signatureAndAddressScriptV2
-
+  _ <- writeFileTextEnvelope (paasdir </> "minting-script-with-string.plutus") Nothing paasMintingWithStringScriptV2
+  _ <- writeFileTextEnvelope (paasdir </> "validate-or-signatures.plutus") Nothing paasValidateOrSignaturesV2
+  
   return ()
